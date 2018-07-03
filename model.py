@@ -10,15 +10,19 @@ with open('data/Train1_log.csv') as csvfile:
 
 images = []
 measurements = []
+steer_correct = [0.2, 0, -0.2]
 for line in lines:
-	sourcepath = line[0]
-	filename = sourcepath.split('/')[-1]
-	currentpath = 'data/Train1/' + filename
-	image = cv2.imread(currentpath)
-	images.append(image)
+	for i in range(3):
+		sourcepath = line[i]
+		filename = sourcepath.split('/')[-1]
+		currentpath = 'data/Train1/' + filename
+		image = cv2.imread(currentpath)
+		images.append(image)
+		images.append(cv2.flip(image,1)) #Flip image
 	
-	measurement = float(line[3])
-	measurements.append(measurement)
+		measurement = float(line[3]) + steer_correct[i]
+		measurements.append(measurement)
+		measurements.append(-measurement)
 
 X_train = np.array(images)
 y_train = np.array(measurements)
@@ -38,7 +42,7 @@ model.add(Flatten())
 model.add(Dense(1))
 
 model.compile(loss = 'mse', optimizer = 'adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=7)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=1)
 
 model.save('model.h5')
 
