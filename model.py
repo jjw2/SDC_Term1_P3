@@ -44,6 +44,7 @@ y_train_raw = np.array(measurements)
 
 plt.figure()
 plt.hist(y_train_raw, bins=10)
+plt.show
 
 # Filter data - need to move this before data/steering augmentation...
 steer_angle_thresh = 0.02
@@ -55,6 +56,7 @@ print(X_train.shape)
 
 plt.figure()
 plt.hist(y_train, bins=10)
+plt.show
 
 
 ## Set Up NNs ##
@@ -101,7 +103,7 @@ def nvidia():
 	model.add(Dense(1))
 
 	model.compile(loss = 'mse', optimizer = 'adam')
-	model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=3, batch_size=256)
+	model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=1, batch_size=128)
 
 	model.save('model.h5')
 
@@ -135,4 +137,4 @@ def nvidia2(): # Same sizes and convoltuions as NVIDIA network
 	model.save('model.h5')
 
 
-nvidia()
+#nvidia()
