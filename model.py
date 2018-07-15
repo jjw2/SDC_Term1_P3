@@ -5,18 +5,18 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from random import random
-get_ipython().run_line_magic('matplotlib', 'inline')
+#get_ipython().run_line_magic('matplotlib', 'inline')
 
 images = []
 measurements = []
 
 # Select which datasets to use for training
 # Thought about making this automatic, but wanted ability to select individual datasets
-datasets = ['Train1', 'Train4', 'Train6', 'Train7']#, 'Train2', 'Train4', 'Train5']
+datasets = ['Train1', 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11', 'Train12']#, 'Train2', 'Train4', 'Train5']
 
 
 samples = []
-steer_correct = [0, 0.20, -0.20]
+steer_correct = [0, 0.27, -0.27]
 
 steer_angle_thresh = 0.04
 steer_keep_pct = .33 # percentage of steering angles withn +/- steering threshold to keep
@@ -40,7 +40,7 @@ for dataset in datasets:
                 ((this_steer >= -steer_angle_thresh) & (this_steer <= steer_angle_thresh) & (random() < steer_keep_pct))):
                 
                 # create a new line for center, left, right
-                for i in range(3): # center, left, right
+                for i in range(1): # center, left, right
                     
                     sourcepath = line[i]
                     
@@ -69,14 +69,12 @@ angles = []
 for sample in samples:
     angles.append(sample[1])
 
-plt.hist(angles, bins=41, range=(-1.0, 1.0))
+#plt.hist(angles, bins=41, range=(-1.0, 1.0))
     
 
 
-
-
-from sklearn.model_selection import train_test_split
 import sklearn
+from sklearn.model_selection import train_test_split
 
 # Split training and validation sets
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)            
@@ -114,8 +112,8 @@ def generator(samples, batch_size = 64):
             y_train = np.array(angles)
             yield sklearn.utils.shuffle(X_train, y_train)
         
-train_generator = generator(train_samples, batch_size=32)
-validation_generator = generator(validation_samples, batch_size=32)
+train_generator = generator(train_samples, batch_size=512)
+validation_generator = generator(validation_samples, batch_size=512)
 
 
 ## Set Up NNs ##
@@ -148,7 +146,7 @@ def nvidia1():
 
 	model.compile(loss = 'mse', optimizer = 'adam')
 	model.fit_generator(train_generator, samples_per_epoch = len(train_samples)*2,
-                        validation_data=validation_generator, nb_val_samples=len(validation_samples)*2, nb_epoch=3)
+                        validation_data=validation_generator, nb_val_samples=len(validation_samples)*2, nb_epoch=5)
 
 	model.save('model.h5')
 
