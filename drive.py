@@ -12,6 +12,8 @@ from PIL import Image
 from flask import Flask
 from io import BytesIO
 
+import cv2
+
 from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
@@ -59,8 +61,12 @@ def telemetry(sid, data):
         speed = data["speed"]
         # The current image from the center camera of the car
         imgString = data["image"]
-        image = Image.open(BytesIO(base64.b64decode(imgString)))
+        #image = Image.open(BytesIO(base64.b64decode(imgString)))
+        image = cv2.imread(imgString)
+        image_array = cv2.cvtColor(image_array, cv2.COLOR_BGR2YUV)
+
         image_array = np.asarray(image)
+
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
