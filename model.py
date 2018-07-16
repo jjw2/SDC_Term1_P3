@@ -16,7 +16,7 @@ datasets = ['Train1', 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11
 
 
 samples = []
-steer_correct = [0, 0.27, -0.27]
+steer_correct = [0, 0.25, -0.25]
 
 steer_angle_thresh = 0.04
 steer_keep_pct = .33 # percentage of steering angles withn +/- steering threshold to keep
@@ -40,7 +40,7 @@ for dataset in datasets:
                 ((this_steer >= -steer_angle_thresh) & (this_steer <= steer_angle_thresh) & (random() < steer_keep_pct))):
                 
                 # create a new line for center, left, right
-                for i in range(1): # center, left, right
+                for i in range(3): # center, left, right
                     
                     sourcepath = line[i]
                     
@@ -146,7 +146,7 @@ def nvidia1():
 
 	model.compile(loss = 'mse', optimizer = 'adam')
 	model.fit_generator(train_generator, samples_per_epoch = len(train_samples)*2,
-                        validation_data=validation_generator, nb_val_samples=len(validation_samples)*2, nb_epoch=5)
+                        validation_data=validation_generator, nb_val_samples=len(validation_samples)*2, nb_epoch=3)
 
 	model.save('model.h5')
 
