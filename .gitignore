@@ -4,3 +4,5 @@ models/
 
 # Backup files
 ~*.*
+.DS_Store
+.ipynb_checkpoints/scratch-checkpoint.ipynb
