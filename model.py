@@ -14,7 +14,7 @@ of data during training. This allowed for a better understanding of what
 
 See the markdown file for a discussion of data collection.
 """
-datasets = ['Train1']#, 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11', 'Train12']
+datasets = ['Train1', 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11', 'Train12']
 
 """
 Steering correction for left and right camera images.
