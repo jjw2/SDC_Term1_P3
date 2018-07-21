@@ -14,7 +14,7 @@ of data during training. This allowed for a better understanding of what
 
 See the markdown file for a discussion of data collection.
 """
-datasets = ['Train1', 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11', 'Train12']
+datasets = ['Train1']#, 'Train4', 'Train6', 'Train7', 'Train8', 'Train9', 'Train11', 'Train12']
 
 """
 Steering correction for left and right camera images.
@@ -162,32 +162,32 @@ dropout = { 'none': 0.0, 'some': 0.3, 'half': 0.5 }
 
 def nvidia():
 
-	model = Sequential()
-	model.add(Cropping2D(cropping=((74,20), (30,30)), input_shape=(160, 320, 3))) # 66, 260
-	model.add(Lambda(lambda x:(x/255.0)-0.5))
-	model.add(Convolution2D(24, 5, 5, subsample=(2,2), activation='relu')) 
-	model.add(Dropout(dropout['some']))
-	model.add(Convolution2D(36, 5, 5, subsample=(2,2), activation='relu'))
-	model.add(Dropout(dropout['some']))
-	model.add(Convolution2D(48, 5, 5, subsample=(2,2), activation='relu'))
-	model.add(Dropout(dropout['some']))
-	model.add(Convolution2D(64, 3, 3, subsample=(1,1), activation='relu'))
-	model.add(Dropout(dropout['some'])) # consider less dropout here?
-	model.add(Convolution2D(64, 3, 3, subsample=(1,1), activation='relu'))
+    model = Sequential()
+    model.add(Cropping2D(cropping=((74,20), (30,30)), input_shape=(160, 320, 3))) # 66, 260
+    model.add(Lambda(lambda x:(x/255.0)-0.5))
+    model.add(Convolution2D(24, 5, 5, subsample=(2,2), activation='relu'))
+    model.add(Dropout(dropout['some']))
+    model.add(Convolution2D(36, 5, 5, subsample=(2,2), activation='relu'))
+    model.add(Dropout(dropout['some']))
+    model.add(Convolution2D(48, 5, 5, subsample=(2,2), activation='relu'))
+    model.add(Dropout(dropout['some']))
+    model.add(Convolution2D(64, 3, 3, subsample=(1,1), activation='relu'))
+    model.add(Dropout(dropout['some'])) # consider less dropout here?
+    model.add(Convolution2D(64, 3, 3, subsample=(1,1), activation='relu'))
     model.add(Dropout(dropout['none'])) # No dropout here; too few params
-	model.add(Flatten())
-	model.add(Dense(1000))
-	model.add(Dropout(dropout['half']))
-	model.add(Dense(100))
-	model.add(Dropout(dropout['some']))
-	model.add(Dense(50))
+    model.add(Flatten())
+    model.add(Dense(1000))
+    model.add(Dropout(dropout['half']))
+    model.add(Dense(100))
+    model.add(Dropout(dropout['some']))
+    model.add(Dense(50))
     model.add(Dropout(dropout['none'])) # No dropout here; too few params
-	model.add(Dense(1))
+    model.add(Dense(1))
 
-	model.compile(loss = 'mse', optimizer = 'adam')
-	model.fit_generator(train_generator, samples_per_epoch = len(train_samples)*2,
+    model.compile(loss = 'mse', optimizer = 'adam')
+    model.fit_generator(train_generator, samples_per_epoch = len(train_samples)*2,
                         validation_data=validation_generator, nb_val_samples=len(validation_samples)*2, nb_epoch=3)
-
-	model.save('model.h5')
+    model.summary()
+    model.save('model.h5')
 
 nvidia()
