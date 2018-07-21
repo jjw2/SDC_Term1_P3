@@ -44,7 +44,7 @@ The submission for this project includes the following files:
 * model.h5 -> trained convolution neural network model
 * video1.mp4 -> video of the car successfully traversing track 1
 * video2.mp4 -> video of the car successfully traversing track 2
-* writeup_report.md -> this document
+* README.md -> this document
 
 
 ## 2. Network Architecture
@@ -56,24 +56,24 @@ Below is a description of my architecture:
 * Cropping - 160x320x3 to 66x260x3
   * The output of this cropping layer (and thus the input to the model) differed from that used by NVIDIA, in that the images I used were wider -> 260 vs 200. I could have further cropped the images, or resized them, but based on the amount of data I was using and the size of the network, I didn't feel it was necessary. With a larger training set, or had it taken longer to train this model, I may have opted to reduce the size of the images.
 * Normalization - 66x20x3 to 66x20x3
-* Convolution - 5x5 convolution; 2x2 stride; depth of 24; relu activation
+* Convolution - 5x5 convolution; 2x2 stride; depth of 24; relu activation; output 31x128x24
 * Dropout - selectable dropout percentage
-* Convolution - 5x5 convolution; 2x2 stride; depth of 36; relu activation
+* Convolution - 5x5 convolution; 2x2 stride; depth of 36; relu activation; output 14x62x36
 * Dropout - selectable dropout percentage
-* Convolution - 5x5 convolution; 2x2 stride;  depth of 48; relu activation
+* Convolution - 5x5 convolution; 2x2 stride;  depth of 48; relu activation; output 5x29x48
 * Dropout - selectable dropout percentage
-* Convolution - 3x3 convolution; 1x1 stride; depth of 64; relu activation
+* Convolution - 3x3 convolution; 1x1 stride; depth of 64; relu activation; output 3x27x64
 * Dropout - selectable dropout percentage
-* Convolution - 3x3 convolution; 1x1 stride; depth of 64; relu activation
+* Convolution - 3x3 convolution; 1x1 stride; depth of 64; relu activation; output 1x25x64
 * Dropout - selectable dropout percentage
-* Flatten
+* Flatten - output 1x1600
 * Fully connected - depth 1000
 * Dropout - selectable dropout percentage
 * Fully connected - depth 100
 * Dropout - selectable dropout percentage
 * Fully connected - depth 50
 * Dropout - selectable dropout percentage
-* Fully connected - depth 1 -> output layers
+* Fully connected - depth 1 -> output layer
 
 I used mean square error as the cost function, with an adam optimizer, and trained for 3 epochs with a batch size of 512. The use of the adam optimizer meant that I really didn't have to do much in the way of parameter tuning.
 
