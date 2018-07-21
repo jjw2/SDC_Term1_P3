@@ -6,3 +6,6 @@ models/
 ~*.*
 .DS_Store
 .ipynb_checkpoints/scratch-checkpoint.ipynb
+
+# python notebooks
+*.ipynb
