@@ -2,6 +2,8 @@
 data/
 models/
 windows_sim/
+track1/
+track2/
 
 # Backup files
 ~*.*
