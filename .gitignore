@@ -1,11 +1,12 @@
 # Data
 data/
 models/
+windows_sim/
 
 # Backup files
 ~*.*
 .DS_Store
-.ipynb_checkpoints/scratch-checkpoint.ipynb
+.ipynb_checkpoints/
 
 #Track recordings
 track1/
