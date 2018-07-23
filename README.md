@@ -55,7 +55,7 @@ Note: I didn't include any data in my submission, and there is a lot of it and i
     * The cars often wouldn't move the first time running the simulator, so I'd have to press 'Esc' and run them a second time.
 
 As a result of these issues, I suggest the following settings:
-* My defaults (set for Track 1 completion):
+* My defaults (set for Track 1 completion on both of my PCs):
   * Speed = 15 mph (if car is unstable, reduce speed)
   * Kp=0.08, Ki=0.0002
   * Beautiful setting at 640x480
