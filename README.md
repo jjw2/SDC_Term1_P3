@@ -42,6 +42,32 @@ My submission for this project includes the following files:
 
 Note: I didn't include any data in my submission, and there is a lot of it and it was not required/requested.
 
+**NOTE: Dealing with Quirky Issues Running the Simulation:**
+* I developed the model across Mac (2013 MB Pro w/ integrated graphics) and Windows PCs (Windows 7 w/ an NVIDIA K2100M graphics card - 2GB RAM) and had some issues running the model across platforms. Below are some notes per platform and a recommendation for simulation parameters when attempting to run my model.
+  * Windows PC:
+    * The simulation simply would not run on Fantastic mode, even at 640x480. It would be very choppy, the car would veer off the road (because the choppiness of the simulation would wind up the integrator of the vehicle speed PI controller and speed would fluctuate drastically), python would freeze, and I'd get an OOM error.
+    * I had to reduce the gains to Kp=0.08 and Ki=0.0002 to get the simulation to run.
+    * I believe I had issues with the simulator if it was running a monitor that wasn't directly connected to the graphics card (i.e.: was connected through through a dock)
+  * Mac:
+    * My Mac generally struggled to run the simulation, but could run a (choppy) 640x480 version on the Beautiful setting at 10 mph and successfully complete both runs. Increasing speed led to some issues, as the simulation would lag significantly, which I'm assuming led to reduced performance of the NN.
+    * The same gain settings required on the Windows PC wouldn't work on my Mac, for some reason. The car would struggle to climb hills, and the lower integral gain would cause wind up on steep hills that would cause the car to surge forward and go off the road after it crested these hills. I successfully ran the simulator with gains of Kp=0.1 and Ki=0.002 (interesting that the integral gain was an order of magnitude different...)
+  * On both:
+    * The cars often wouldn't move the first time running the simulator, so I'd have to press 'Esc' and run them a second time.
+
+As a result of these issues, I suggest the following settings:
+* My defaults (set for Track 1 completion):
+  * Speed = 15 mph (if car is unstable, reduce speed)
+  * Kp=0.08, Ki=0.0002
+  * Beautiful setting at 640x480
+* Tweaks, if required:
+  * No higher than Beautiful setting, at 640x480 (you may be able to run different settings if you have a more capable graphics card that doesn't cause the simulation to lag; if your computer is less capable, try the Good setting).
+  * One of the following 2 gain settings (set in the drive.py file):
+    * Kp=0.1, Ki=0.002 (required for Track 2 on the Mac); or Kp=0.08, Ki=0.0002. (I wish I had more time to diagnose this and provide better direction, but unfortunately, I don't)
+  * Max speeds:
+    * Track 1: 15 mph
+    * Track 2: 10 mph (I was able to complete at 15 mph on my Windows PC, but not the Mac.)
+
+
 ## 2. Network Architecture
 
 This portion of the project was relatively straight-forward, as the Udacity classroom sessions referenced a proven model architecture developed and tested by [NVIDIA](https://arxiv.org/pdf/1604.07316v1.pdf). While some specific details of the architecture were omitted from the information provided by NVIDIA (ex: dropout rates), I chose to use the NVIDIA architecture from the beginning, and felt confident that the network architecture would not be an issue.
